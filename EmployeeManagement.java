@@ -35,19 +35,15 @@ public class EmployeeManagement {
                         System.out.print("Enter Salary: ");
                         double salary = sc.nextDouble();
 
-                        FileOutputStream fout;
-
-                        if (choice == 1) {
-                            fout = new FileOutputStream("Employee.txt");
-                        } else {
-                            fout = new FileOutputStream("Employee.txt", true);
-                        }
-
                         if (id <= 0 || !Double.isFinite(salary) || salary < 0 || name.isBlank() || designation.isBlank() || name.contains(",") || designation.contains(",")) {
                             System.out.println("Invalid employee record: use a positive ID, nonnegative finite salary, and nonempty comma-free text.");
-                            fout.close();
                             break;
                         }
+                        if (choice == 1) {
+                            System.out.println("Warning: this will replace all existing records in Employee.txt.");
+                        }
+                        FileOutputStream fout = new FileOutputStream("Employee.txt", choice != 1);
+
                         String data = id + "," + name + "," +
                                       designation + "," + salary + "\n";
 
