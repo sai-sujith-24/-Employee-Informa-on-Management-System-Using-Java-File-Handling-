@@ -2,6 +2,7 @@
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 
 public class EmployeeManagement {
     public static void main(String[] args) {
@@ -42,10 +43,15 @@ public class EmployeeManagement {
                             fout = new FileOutputStream("Employee.txt", true);
                         }
 
+                        if (id <= 0 || !Double.isFinite(salary) || salary < 0 || name.isBlank() || designation.isBlank() || name.contains(",") || designation.contains(",")) {
+                            System.out.println("Invalid employee record: use a positive ID, nonnegative finite salary, and nonempty comma-free text.");
+                            fout.close();
+                            break;
+                        }
                         String data = id + "," + name + "," +
                                       designation + "," + salary + "\n";
 
-                        fout.write(data.getBytes());
+                        fout.write(data.getBytes(StandardCharsets.UTF_8));
                         fout.close();
 
                         System.out.println("Employee record successfully written to the file.");
